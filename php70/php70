@@ -1,0 +1,32 @@
+#!/bin/bash
+
+docker_name="php70"
+if [[ $1 = *.php ]]; then
+  files=$(pwd -P)"/"
+  #替换映射路径
+  volumes=$(docker inspect -f '{{.Config.Volumes}}' $docker_name)
+  volumes=${volumes#*[}
+  volumes=${volumes%]*}
+  for vo in $volumes
+  do
+     #获取映射路径和相对路径
+     rp1=${vo#*:}
+     rp2=${vo%:*}
+     #替换路径
+     p1=${1/$rp1/$rp2}
+     p2=${files/$rp1/$rp2}
+    #相对路径执行
+    if [[ $(docker exec -it $docker_name ls $p1) == *$p1* ]]; then
+        path=${*/$rp1/$rp2}
+        docker exec  -it $docker_name php $path
+        exit 1
+    #绝对路径执行
+   elif [[ $(docker exec -it $docker_name ls $p2$1) == *$p2* ]]; then
+        docker exec  -it $docker_name php $p2$*
+        exit 1
+    fi
+   done
+   echo "找不到执行文件"
+else
+  docker exec  -it $docker_name php $*
+fi
