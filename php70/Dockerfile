@@ -4,8 +4,8 @@ FROM php:7.1-fpm-alpine
 # RUN  echo > /etc/apk/repositories
 
 # Install env 添加国内镜像到顶部
- RUN sed -i '1i\http://mirrors.ustc.edu.cn/alpine/v3.4/main/' /etc/apk/repositories
- RUN sed -i '1i\http://mirrors.ustc.edu.cn/alpine/v3.4/community/' /etc/apk/repositories
+#RUN sed -i '1i\http://mirrors.ustc.edu.cn/alpine/v3.4/main/' /etc/apk/repositories
+#RUN sed -i '1i\http://mirrors.ustc.edu.cn/alpine/v3.4/community/' /etc/apk/repositories
 #RUN sed -i '1i\http://mirrors.aliyun.com/alpine/v3.4/main/' /etc/apk/repositories
 #RUN sed -i '1i\http://mirrors.aliyun.com/alpine/v3.4/community/' /etc/apk/repositories
 
